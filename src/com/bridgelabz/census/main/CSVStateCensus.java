@@ -16,7 +16,7 @@ public class CSVStateCensus {
      * @throws IOException If an I/O error occurs while reading the file.
      * @throws InvalidDataTypeException 
      */
-    public static List<StateCensus> loadCSV(String filePath) throws IOException,InvalidCSVFormatException, InvalidDataTypeException {
+    public static List<StateCensus> loadCSV(String filePath) throws IOException,InvalidCSVFormatException, InvalidDataTypeException,InvalidDelimiterException {
         List<StateCensus> stateCensusList = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {

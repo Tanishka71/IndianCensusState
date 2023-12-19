@@ -16,6 +16,7 @@ import org.junit.jupiter.api.Test;
 import com.bridgelabz.census.main.CSVStateCensus;
 import com.bridgelabz.census.main.InvalidCSVFormatException;
 import com.bridgelabz.census.main.InvalidDataTypeException;
+import com.bridgelabz.census.main.InvalidDelimiterException;
 import com.bridgelabz.census.main.StateCensus;
 
 import junit.framework.Assert;
@@ -31,7 +32,7 @@ class StateCensusTest {
 	 * @return: none
 	 */
 	@Test
-	void happyTestToCheckSize() throws  IOException, InvalidCSVFormatException, InvalidDataTypeException {
+	void happyTestToCheckSize() throws  IOException, InvalidCSVFormatException, InvalidDataTypeException, InvalidDelimiterException {
 		List<StateCensus> stateCensusList = CSVStateCensus.loadCSV("C:\\Users\\tanishka\\eclipse-workspace\\IndianStatesCensus\\StateCensus.csv");
 		 int expectedNumberOfRecords = 37;
 		 Assert.assertEquals(expectedNumberOfRecords,stateCensusList.size(), 0);
@@ -71,6 +72,24 @@ class StateCensusTest {
         assertThrows(InvalidDataTypeException.class, () -> {
             CSVStateCensus.loadCSV(incorrectDataTypeFilePath);
         }, "Expected InvalidDataTypeException but it was not thrown.");
+    }
+    
+  //<------------------TESE CASE 1.4--------------->
+  	/*
+  	 * @desc:sad test case to throw custom exception for incorrect delimiter in csv
+  	 * @params: none
+  	 * @return: none
+  	 */
+    @Test
+    void testIncorrectDelimiter() {
+        // Specify the path to a CSV file with incorrect delimiter
+        String incorrectDelimiterFilePath = "C:\\\\Users\\\\tanishka\\\\eclipse-workspace\\\\IndianStatesCensus\\\\IncorrectDelimiter.csv";
+        String expectedDelimiter = ";";  // Set the expected delimiter
+
+        // Use JUnit's assertThrows to check if the custom exception is thrown
+        assertThrows(InvalidDelimiterException.class, () -> {
+            CSVStateCensus.loadCSV(incorrectDelimiterFilePath);
+        }, "Expected InvalidDelimiterException but it was not thrown.");
     }
 
 }
