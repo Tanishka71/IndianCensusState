@@ -14,6 +14,8 @@ class Main {
      * @return none
      */
     public static void main(String[] args) {
+    	System.out.println("<-------------WELCOME TO INDIAN STATE CENSUS--------------->");
+    	System.out.println();
         try {
             List<StateCensus> stateCensusList = CSVStateCensus
                     .loadCSV("C:\\Users\\tanishka\\eclipse-workspace\\IndianStatesCensus\\StateCensus.csv");
