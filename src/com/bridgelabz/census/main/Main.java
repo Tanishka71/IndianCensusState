@@ -12,24 +12,26 @@ class Main {
      * @desc: Main method to execute the program.
      * @param args Command-line arguments (not used in this program).
      * @return none
+     * @throws IOException 
      */
-    public static void main(String[] args) {
-    	System.out.println("<-------------WELCOME TO INDIAN STATE CENSUS--------------->");
-    	System.out.println();
-        try {
-            List<StateCensus> stateCensusList = CSVStateCensus
-                    .loadCSV("C:\\Users\\tanishka\\eclipse-workspace\\IndianStatesCensus\\StateCensus.csv");
+	public static void main(String[] args){
+		 try {
+	            List<StateCensus> stateCensusList = CSVStateCensus
+	                    .loadCSV("C:\\Users\\tanishka\\eclipse-workspace\\IndianStatesCensus\\StateCensus.csv");
 
-
-            Iterator<StateCensus> iterator = stateCensusList.iterator();
-            while (iterator.hasNext()) {
-                System.out.println(iterator.next());
-            }
-
-
-            System.out.println("Number of records: " + stateCensusList.size());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
+	            // Use Iterator to load the data
+	            Iterator<StateCensus> iterator = stateCensusList.iterator();
+	            while (iterator.hasNext()) {
+	                System.out.println(iterator.next());
+	            }
+	            System.out.println("Number of records: " + stateCensusList.size());
+	        } catch (IOException e) {
+	            // Handle IOException (e.g., file not found or I/O error)
+	            e.printStackTrace();
+	        }  
+		 catch (InvalidCSVFormatException e) {
+	            // Handle custom exception for invalid CSV format
+	            System.err.println("Error loading CSV file: " + e.getMessage());
+	        }     
+}
 }
