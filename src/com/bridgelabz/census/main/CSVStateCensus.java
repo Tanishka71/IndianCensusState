@@ -14,8 +14,9 @@ public class CSVStateCensus {
      * @param filePath The path to the CSV file containing state census data.
      * @return A list of StateCensus objects representing the loaded data.
      * @throws IOException If an I/O error occurs while reading the file.
+     * @throws InvalidDataTypeException 
      */
-    public static List<StateCensus> loadCSV(String filePath) throws IOException,InvalidCSVFormatException {
+    public static List<StateCensus> loadCSV(String filePath) throws IOException,InvalidCSVFormatException, InvalidDataTypeException {
         List<StateCensus> stateCensusList = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -28,12 +29,16 @@ public class CSVStateCensus {
                 if (data.length != expectedColumns) {
                     throw new InvalidCSVFormatException("Invalid number of columns in CSV file. Expected: " + expectedColumns);
                 }
-                String state = data[1].trim();
-                int population = Integer.parseInt(data[2].trim());
-                String stateCode = data[3].trim();
+                try {
+                    String state = data[0].trim();
+                    int population = Integer.parseInt(data[1].trim());
+                    String stateCode = data[2].trim();
 
-                StateCensus stateCensus = new StateCensus(state, population, stateCode);
-                stateCensusList.add(stateCensus);
+                    StateCensus stateCensus = new StateCensus(state, population, stateCode);
+                    stateCensusList.add(stateCensus);
+                } catch (NumberFormatException e) {
+                    throw new InvalidDataTypeException("Invalid data type in CSV file. Population should be an integer.");
+                }
             }
         }
 

@@ -15,30 +15,14 @@ import org.junit.jupiter.api.Test;
 
 import com.bridgelabz.census.main.CSVStateCensus;
 import com.bridgelabz.census.main.InvalidCSVFormatException;
+import com.bridgelabz.census.main.InvalidDataTypeException;
 import com.bridgelabz.census.main.StateCensus;
 
 import junit.framework.Assert;
 
 class StateCensusTest {
 
-	 List<StateCensus> stateCensusList;
-	@BeforeEach
-	void setUp() {
 
-	           try {
-	            stateCensusList = CSVStateCensus.loadCSV("C:\\Users\\tanishka\\eclipse-workspace\\IndianStatesCensus\\StateCensus.csv");
-	           
-
-	            Iterator<StateCensus> iterator = stateCensusList.iterator();
-	            while (iterator.hasNext()) {
-	                System.out.println(iterator.next());
-	            
-	           }
-	           }
-	           catch (IOException e) {
-	               e.printStackTrace();
-	           }
-	}
 
 	//<------------------TESE CASE 1.1--------------->
 	/*
@@ -47,7 +31,8 @@ class StateCensusTest {
 	 * @return: none
 	 */
 	@Test
-	void happyTestToCheckSize() {
+	void happyTestToCheckSize() throws  IOException, InvalidCSVFormatException, InvalidDataTypeException {
+		List<StateCensus> stateCensusList = CSVStateCensus.loadCSV("C:\\Users\\tanishka\\eclipse-workspace\\IndianStatesCensus\\StateCensus.csv");
 		 int expectedNumberOfRecords = 37;
 		 Assert.assertEquals(expectedNumberOfRecords,stateCensusList.size(), 0);
 	}
@@ -63,12 +48,29 @@ class StateCensusTest {
     @Test
     void testInvalidCSVFormat() {
         // Specify the path to an incorrect State Census CSV file
-        String incorrectFilePath = "C:\\\\Users\\\\tanishka\\\\eclipse-workspace\\\\IndianStatesCensus\\\\Incorrect.csv";
+        String incorrectFilePath = "C:\\\\Users\\\\tanishka\\\\eclipse-workspace\\\\IndianStatesCensus\\\\IncorrectFormat.csv";
 
         // Use JUnit's assertThrows to check if the custom exception is thrown
         assertThrows(InvalidCSVFormatException.class, () -> {
             CSVStateCensus.loadCSV(incorrectFilePath);
         }, "Expected InvalidCSVFormatException but it was not thrown.");
+    }
+    
+  //<------------------TESE CASE 1.3--------------->
+  	/*
+  	 * @desc:sad test case to throw custom exception for incorrect data type in csv
+  	 * @params: none
+  	 * @return: none
+  	 */
+    @Test
+    void testIncorrectDataType() {
+        // Specify the path to a CSV file with incorrect data type
+        String incorrectDataTypeFilePath = "C:\\Users\\tanishka\\eclipse-workspace\\IndianStatesCensus\\IncorrectType.csv";
+
+        // Use JUnit's assertThrows to check if the custom exception is thrown
+        assertThrows(InvalidDataTypeException.class, () -> {
+            CSVStateCensus.loadCSV(incorrectDataTypeFilePath);
+        }, "Expected InvalidDataTypeException but it was not thrown.");
     }
 
 }
