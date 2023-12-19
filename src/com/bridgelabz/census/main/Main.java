@@ -1,4 +1,4 @@
-package com.bridgelabz.census;
+package com.bridgelabz.census.main;
 
 import java.io.IOException;
 import java.util.Iterator;

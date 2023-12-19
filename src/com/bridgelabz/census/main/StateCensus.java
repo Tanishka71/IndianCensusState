@@ -1,9 +1,9 @@
-package com.bridgelabz.census;
+package com.bridgelabz.census.main;
 
 /**
  * @desc:Represents state census information including state name, population, and state code.
  */
-class StateCensus {
+public class StateCensus {
     // Fields
     private String state;      
     private int population;     

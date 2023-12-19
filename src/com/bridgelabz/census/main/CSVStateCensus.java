@@ -1,4 +1,4 @@
-package com.bridgelabz.census;
+package com.bridgelabz.census.main;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -6,7 +6,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 //@desc: to load the data 
-class CSVStateCensus {
+public class CSVStateCensus {
+	
+	//<------------USE CASE 1--------------->
     /**
      * @desc:Loads state census data from a CSV file.
      * @param filePath The path to the CSV file containing state census data.
