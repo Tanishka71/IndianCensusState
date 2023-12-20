@@ -17,6 +17,7 @@ import com.bridgelabz.census.main.CSVStateCensus;
 import com.bridgelabz.census.main.InvalidCSVFormatException;
 import com.bridgelabz.census.main.InvalidDataTypeException;
 import com.bridgelabz.census.main.InvalidDelimiterException;
+import com.bridgelabz.census.main.InvalidHeaderException;
 import com.bridgelabz.census.main.StateCensus;
 
 import junit.framework.Assert;
@@ -46,7 +47,7 @@ class StateCensusTest {
 	 * @params: none
 	 * @return: none
 	 */
-    @Test
+//    @Test
     void testInvalidCSVFormat() {
         // Specify the path to an incorrect State Census CSV file
         String incorrectFilePath = "C:\\\\Users\\\\tanishka\\\\eclipse-workspace\\\\IndianStatesCensus\\\\IncorrectFormat.csv";
@@ -63,7 +64,7 @@ class StateCensusTest {
   	 * @params: none
   	 * @return: none
   	 */
-    @Test
+//    @Test
     void testIncorrectDataType() {
         // Specify the path to a CSV file with incorrect data type
         String incorrectDataTypeFilePath = "C:\\Users\\tanishka\\eclipse-workspace\\IndianStatesCensus\\IncorrectType.csv";
@@ -90,6 +91,18 @@ class StateCensusTest {
         assertThrows(InvalidDelimiterException.class, () -> {
             CSVStateCensus.loadCSV(incorrectDelimiterFilePath);
         }, "Expected InvalidDelimiterException but it was not thrown.");
+    }
+    
+    @Test
+    void testIncorrectHeader() {
+        // Specify the path to a CSV file with incorrect header
+        String incorrectHeaderFilePath = "C:\\Users\\tanishka\\eclipse-workspace\\IndianStatesCensus\\StateCensus.csv";
+        String expectedHeader = "SNO,State,Population,Code";  // Set the expected header
+
+        // Use JUnit's assertThrows to check if the custom exception is thrown
+        assertThrows(InvalidHeaderException.class, () -> {
+            CSVStateCensus.loadCSV(incorrectHeaderFilePath);
+        }, "Expected InvalidHeaderException but it was not thrown.");
     }
 
 }

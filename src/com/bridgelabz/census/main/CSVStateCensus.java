@@ -16,7 +16,7 @@ public class CSVStateCensus {
      * @throws IOException If an I/O error occurs while reading the file.
      * @throws InvalidDataTypeException 
      */
-    public static List<StateCensus> loadCSV(String filePath) throws IOException,InvalidCSVFormatException, InvalidDataTypeException,InvalidDelimiterException {
+    public static List<StateCensus> loadCSV(String filePath) throws IOException,InvalidCSVFormatException, InvalidHeaderException{
         List<StateCensus> stateCensusList = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
@@ -29,16 +29,14 @@ public class CSVStateCensus {
                 if (data.length != expectedColumns) {
                     throw new InvalidCSVFormatException("Invalid number of columns in CSV file. Expected: " + expectedColumns);
                 }
-                try {
+               
                     String state = data[0].trim();
                     int population = Integer.parseInt(data[1].trim());
                     String stateCode = data[2].trim();
 
                     StateCensus stateCensus = new StateCensus(state, population, stateCode);
                     stateCensusList.add(stateCensus);
-                } catch (NumberFormatException e) {
-                    throw new InvalidDataTypeException("Invalid data type in CSV file. Population should be an integer.");
-                }
+               
             }
         }
 
